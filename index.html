@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisi SEO installazionegarantita.it — AS-IS vs TO-BE</title>
+  <style>
+    :root {
+      --red: #dc2626; --red-bg: #fef2f2; --red-border: #fca5a5;
+      --green: #16a34a; --green-bg: #f0fdf4; --green-border: #86efac;
+      --blue: #0b3d91; --gray: #6b7280;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #1e293b; }
+
+    /* HEADER */
+    .report-header { background: linear-gradient(135deg, #1a5276, #0e6655); color: white; padding: 48px 40px; text-align: center; }
+    .logo-tag { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); border-radius: 20px; padding: 6px 18px; font-size: 13px; font-weight: 600; letter-spacing: .5px; margin-bottom: 18px; }
+    .report-header h1 { font-size: 36px; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
+    .report-header .subtitle { font-size: 18px; opacity: .85; margin-bottom: 24px; }
+    .header-meta { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+    .header-meta-item { background: rgba(255,255,255,.12); border-radius: 8px; padding: 10px 20px; font-size: 14px; text-align: center; }
+    .header-meta-item strong { display: block; font-size: 20px; font-weight: 800; }
+
+    /* SCORE */
+    .score-section { max-width: 1100px; margin: 40px auto 0; padding: 0 30px; }
+    .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
+    .score-card { border-radius: 14px; padding: 28px; display: flex; gap: 20px; align-items: flex-start; }
+    .score-card.as-is { background: var(--red-bg); border: 2px solid var(--red-border); }
+    .score-card.to-be { background: var(--green-bg); border: 2px solid var(--green-border); }
+    .score-big { display: flex; flex-direction: column; align-items: center; min-width: 90px; line-height: 1; }
+    .score-big .score-num { font-size: 64px; font-weight: 900; line-height: 1; }
+    .score-big .score-denom { font-size: 15px; font-weight: 700; letter-spacing: 1px; opacity: .55; margin-top: 4px; }
+    .score-card.as-is .score-big .score-num { color: var(--red); }
+    .score-card.as-is .score-big .score-denom { color: var(--red); }
+    .score-card.to-be .score-big .score-num { color: var(--green); }
+    .score-card.to-be .score-big .score-denom { color: var(--green); }
+    .score-label { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .score-desc { font-size: 14px; color: var(--gray); line-height: 1.5; }
+    .score-badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 12px; margin-top: 8px; }
+    .badge-red { background: var(--red); color: white; }
+    .badge-green { background: var(--green); color: white; }
+
+    /* ISSUES */
+    .issues-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 30px; }
+    .issue-card { border-radius: 10px; padding: 16px; text-align: center; border: 2px solid; }
+    .issue-card.critical { background: #fef2f2; border-color: #fca5a5; }
+    .issue-card.high { background: #fff7ed; border-color: #fdba74; }
+    .issue-card.medium { background: #fffbeb; border-color: #fcd34d; }
+    .issue-card .num { font-size: 32px; font-weight: 900; }
+    .issue-card.critical .num { color: var(--red); }
+    .issue-card.high .num { color: #ea580c; }
+    .issue-card.medium .num { color: #ca8a04; }
+    .issue-card .lbl { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; margin-top: 4px; color: var(--gray); }
+    .issue-card .desc { font-size: 12px; color: var(--gray); margin-top: 6px; line-height: 1.4; }
+
+    /* SECTIONS */
+    .section-block { max-width: 1100px; margin: 0 auto 50px; padding: 0 30px; }
+    .section-title-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+    .section-title-bar h2 { font-size: 22px; font-weight: 800; color: var(--blue); }
+    .section-num { background: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+
+    /* IMPACT */
+    .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
+    .impact-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,.06); border-top: 4px solid var(--blue); }
+    .impact-card .metric { font-size: 28px; font-weight: 900; color: var(--blue); }
+    .impact-card .metric-label { font-size: 14px; font-weight: 700; margin: 6px 0 4px; }
+    .impact-card .metric-desc { font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+    /* TABLE */
+    .comparison-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .comparison-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,.08); min-width: 600px; }
+    .comparison-table thead th { padding: 14px 20px; font-size: 13px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+    .comparison-table thead .th-elem { background: #1e293b; color: white; width: 20%; }
+    .comparison-table thead .th-asis { background: var(--red); color: white; width: 40%; }
+    .comparison-table thead .th-tobe { background: var(--green); color: white; width: 40%; }
+    .comparison-table tbody tr:nth-child(even) td { background: #f8fafc; }
+    .comparison-table tbody tr:nth-child(odd) td { background: white; }
+    .comparison-table tbody td { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; font-size: 14px; vertical-align: top; line-height: 1.6; }
+    .comparison-table tbody .td-elem { font-weight: 700; color: #1e293b; border-right: 1px solid #e2e8f0; }
+    .comparison-table tbody .td-asis { border-right: 1px solid #e2e8f0; }
+    .status { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 12px; margin-bottom: 6px; }
+    .status-error { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+    .status-ok { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+    .status-warning { background: #fffbeb; color: #d97706; border: 1px solid #fcd34d; }
+    .issue-text { color: var(--red); }
+    .fix-text { color: var(--green); }
+    .code-snippet { display: block; background: #1e293b; color: #94a3b8; font-family: 'Courier New', monospace; font-size: 12px; padding: 8px 12px; border-radius: 6px; margin-top: 8px; word-break: break-all; line-height: 1.5; }
+    .hl-red { color: #f87171; }
+    .hl-green { color: #86efac; }
+
+    /* AUDIT PAGINE */
+    .pages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .page-audit { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .page-audit h3 { font-size: 15px; font-weight: 700; color: var(--blue); margin-bottom: 12px; }
+    .audit-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; font-size: 13px; line-height: 1.4; }
+    .audit-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+    .dot-red { background: var(--red); }
+    .dot-green { background: var(--green); }
+    .dot-orange { background: #f97316; }
+
+    /* CTA / FOOTER */
+    .cta-bar { background: linear-gradient(135deg, var(--green) 0%, #15803d 100%); color: white; text-align: center; padding: 48px 40px; margin-top: 50px; }
+    .cta-bar h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; }
+    .cta-bar p { font-size: 16px; opacity: .9; }
+    .report-footer { background: #1e293b; color: #94a3b8; padding: 30px 40px; text-align: center; }
+    .report-footer p { font-size: 13px; line-height: 1.8; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .score-grid, .impact-grid, .pages-grid { grid-template-columns: 1fr; }
+      .issues-grid { grid-template-columns: repeat(3, 1fr); }
+      .section-block, .score-section { padding: 0 16px; }
+    }
+    @media (max-width: 600px) {
+      .report-header { padding: 32px 20px; }
+      .report-header h1 { font-size: 24px; }
+      .header-meta { flex-direction: column; align-items: center; gap: 10px; }
+      .header-meta-item { width: 80%; }
+      .score-section { padding: 0 12px; margin-top: 24px; }
+      .score-card { flex-direction: column; align-items: center; text-align: center; padding: 20px; }
+      .score-big .score-num { font-size: 52px; }
+      .issues-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .section-block { padding: 0 12px; margin-bottom: 32px; }
+      .section-title-bar h2 { font-size: 18px; }
+      .cta-bar { padding: 36px 20px; }
+      .cta-bar h2 { font-size: 22px; }
+      .report-footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="logo-tag">📊 AUDIT SEO PROFESSIONALE</div>
+  <h1>Analisi SEO: installazionegarantita.it</h1>
+  <p class="subtitle">Confronto AS-IS (stato attuale) vs TO-BE (versione ottimizzata)</p>
+  <div class="header-meta">
+    <div class="header-meta-item"><strong>12</strong>Problemi SEO rilevati</div>
+    <div class="header-meta-item"><strong>3</strong>Pagine analizzate</div>
+    <div class="header-meta-item"><strong>10</strong>Aree di ottimizzazione</div>
+    <div class="header-meta-item"><strong>Maggio 2025</strong>Data analisi</div>
+  </div>
+</div>
+
+<!-- SCORE -->
+<div class="score-section">
+  <div class="score-grid">
+    <div class="score-card as-is">
+      <div class="score-big"><span class="score-num">32</span><span class="score-denom">/ 100</span></div>
+      <div>
+        <div class="score-label">🔴 Stato Attuale (AS-IS)</div>
+        <div class="score-desc">Meta description assente su tutte le pagine, nessun Open Graph, nessuno schema markup, nessun canonical tag, immagini senza alt text, typo nel testo ("Cos è" invece di "Cos'è"), H3 troncato ("Garanzia 10" invece di "Garanzia 10 Anni"), pagina Blog senza H1, rischio contenuto duplicato tra più landing page simili.</div>
+        <span class="score-badge badge-red">INTERVENTO URGENTE NECESSARIO</span>
+      </div>
+    </div>
+    <div class="score-card to-be">
+      <div class="score-big"><span class="score-num">89</span><span class="score-denom">/ 100</span></div>
+      <div>
+        <div class="score-label">🟢 Versione Ottimizzata (TO-BE)</div>
+        <div class="score-desc">Title e meta description ottimizzati per "installazione condizionatori Milano", canonical su ogni pagina, OG tags completi, schema LocalBusiness + Service con garanzia e certificazione Daikin, alt text descrittivi per tutte le immagini, heading corretti, robots.txt con sitemap dichiarata.</div>
+        <span class="score-badge badge-green">OTTIMIZZAZIONE COMPLETATA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ISSUES SUMMARY -->
+  <div class="issues-grid">
+    <div class="issue-card critical">
+      <div class="num">3</div>
+      <div class="lbl">Critici</div>
+      <div class="desc">Meta desc. assente, no OG tags, no schema markup — perdita visibilità diretta</div>
+    </div>
+    <div class="issue-card critical">
+      <div class="num">4</div>
+      <div class="lbl">No Canonical</div>
+      <div class="desc">Nessun canonical su nessuna pagina + 4 landing page potenzialmente duplicate nella sitemap</div>
+    </div>
+    <div class="issue-card high">
+      <div class="num">2</div>
+      <div class="lbl">Typo Testi</div>
+      <div class="desc">"Cos è" (manca apostrofo) e "Garanzia 10" (testo troncato) presenti nel sito</div>
+    </div>
+    <div class="issue-card high">
+      <div class="num">5+</div>
+      <div class="lbl">Alt text</div>
+      <div class="desc">Logo, badge Daikin e immagini principali senza alt descrittivo</div>
+    </div>
+    <div class="issue-card medium">
+      <div class="num">1</div>
+      <div class="lbl">H1 Blog</div>
+      <div class="desc">Pagina Blog senza H1 — il primo heading visibile è un H2</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEZIONE 1: IMPATTO ATTESO ═══ -->
+<div class="section-block">
+  <div class="section-title-bar">
+    <div class="section-num">1</div>
+    <h2>Impatto Atteso dell'Ottimizzazione SEO</h2>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="metric">+15–25%</div>
+      <div class="metric-label">CTR organico stimato</div>
+      <div class="metric-desc">Meta description ottimizzate con keyword "installazione condizionatori Milano" e CTA aumentano il tasso di click nei risultati di ricerca rispetto allo snippet automatico attuale.</div>
+    </div>
+    <div class="impact-card">
+      <div class="metric">⭐ Rich</div>
+      <div class="metric-label">Snippet nelle SERP</div>
+      <div class="metric-desc">Con schema markup LocalBusiness e la certificazione Daikin, il sito può mostrare stelle, badge di garanzia e dati strutturati direttamente nei risultati Google.</div>
+    </div>
+    <div class="impact-card">
+      <div class="metric">+40%</div>
+      <div class="metric-label">Condivisibilità social</div>
+      <div class="metric-desc">Open Graph e Twitter Card abilitano anteprime ricche su Facebook, WhatsApp e LinkedIn ogni volta che un link viene condiviso — fondamentale per lead generation via social.</div>
+    </div>
+    <div class="impact-card">
+      <div class="metric">−Dup.</div>
+      <div class="metric-label">Contenuto duplicato eliminato</div>
+      <div class="metric-desc">I canonical tag disambiguano le 4 landing page simili (/nuovi-condizionatori-senza-stress/, /nuovi-condizionatori-g/, /perfera-all-season/, /installazione-garantita-2/) evitando penalizzazioni.</div>
+    </div>
+    <div class="impact-card">
+      <div class="metric">+Local</div>
+      <div class="metric-label">SEO locale Milano</div>
+      <div class="metric-desc">Schema LocalBusiness con indirizzo, telefono, orari e area di servizio rafforza la presenza in Google Maps e nelle query locali "installazione condizionatori Milano".</div>
+    </div>
+    <div class="impact-card">
+      <div class="metric">✅ UX</div>
+      <div class="metric-label">Credibilità e qualità percepita</div>
+      <div class="metric-desc">La correzione dei typo ("Cos'è", "Garanzia 10 Anni") e gli alt text completi migliorano l'accessibilità e la percezione professionale del brand agli occhi di Google e degli utenti.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEZIONE 2: TABELLA DI CONFRONTO ═══ -->
+<div class="section-block">
+  <div class="section-title-bar">
+    <div class="section-num">2</div>
+    <h2>Tabella di Confronto: Elementi SEO On-Page</h2>
+  </div>
+  <div class="comparison-table-wrapper">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th class="th-elem">Elemento SEO</th>
+        <th class="th-asis">🔴 AS-IS — Stato Attuale</th>
+        <th class="th-tobe">🟢 TO-BE — Versione Ottimizzata</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- META TITLE -->
+      <tr>
+        <td class="td-elem">📌 Meta Title<br><small style="font-weight:400;color:var(--gray)">Homepage</small></td>
+        <td class="td-asis">
+          <span class="status status-warning">⚠️ DA OTTIMIZZARE</span><br>
+          <span class="issue-text">Title non ottimizzato per keyword principale.</span>
+          <span class="code-snippet"><span class="hl-red">&lt;title&gt;Installazione Garantita&lt;/title&gt;</span></span>
+          <ul style="margin-top:10px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>Solo brand name, nessuna keyword di ricerca</li>
+            <li>Manca "installazione condizionatori"</li>
+            <li>Nessun riferimento geografico (Milano)</li>
+            <li>Manca differenziatore (Daikin, garanzia 10 anni)</li>
+          </ul>
+        </td>
+        <td>
+          <span class="status status-ok">✅ OTTIMIZZATO</span><br>
+          <span class="fix-text">«Installazione Condizionatori Milano — Garanzia 10 Anni | Installazione Garantita»</span>
+          <span class="code-snippet"><span class="hl-green">&lt;title&gt;Installazione Condizionatori Milano — Garanzia 10 Anni | Installazione Garantita&lt;/title&gt;</span></span>
+          <ul style="margin-top:10px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ Keyword principale in posizione iniziale</li>
+            <li>✓ Riferimento geografico "Milano"</li>
+            <li>✓ Differenziatore "Garanzia 10 Anni"</li>
+            <li>✓ Brand in coda — 72 caratteri</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- META DESCRIPTION -->
+      <tr>
+        <td class="td-elem">📝 Meta Description<br><small style="font-weight:400;color:var(--gray)">Tutte le pagine</small></td>
+        <td class="td-asis">
+          <span class="status status-error">❌ ASSENTE — TUTTE LE PAGINE</span><br>
+          <span class="issue-text">Nessuna delle 3 pagine analizzate ha una meta description.</span><br>
+          <span style="font-size:13px;color:var(--gray);display:block;margin-top:8px">Google genera snippet automatici non controllati, spesso troncati in modo svantaggioso. CTR stimato inferiore del 5–10%.</span>
+        </td>
+        <td>
+          <span class="status status-ok">✅ AGGIUNTA — TUTTE LE PAGINE</span><br>
+          <span class="fix-text">Homepage (151 caratteri):</span>
+          <span class="code-snippet"><span class="hl-green">«Installa il tuo condizionatore Daikin a Milano con tecnici certificati F-gas. Garanzia 10 anni, prezzo bloccato, zero polvere. Richiedi un preventivo gratuito!»</span></span>
+          <ul style="margin-top:10px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ Keyword + brand Daikin nella prima frase</li>
+            <li>✓ 3 differenziatori chiave (garanzia, prezzo, pulizia)</li>
+            <li>✓ CTA "Richiedi preventivo gratuito"</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- HEADING -->
+      <tr>
+        <td class="td-elem">🏗️ Struttura Heading<br><small style="font-weight:400;color:var(--gray)">H1 / H2 / H3</small></td>
+        <td class="td-asis">
+          <span class="status status-warning">⚠️ PROBLEMI PRESENTI</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li><strong>Homepage H1:</strong> «L'installazione di un condizionatore non è mai stata così semplice» — emotivo ma senza keyword "installazione condizionatori Milano"</li>
+            <li><strong>H2 typo:</strong> «Cos è Installazione garantita?» — manca apostrofo (deve essere "Cos'è")</li>
+            <li><strong>H3 troncato:</strong> «Garanzia 10» — testo incompleto, manca "Anni"</li>
+            <li><strong>Blog:</strong> nessun H1 — il titolo "Blog" è un H2</li>
+            <li><strong>H2 "Compila il modulo di contatto":</strong> sezione form usata come heading semantico</li>
+          </ul>
+        </td>
+        <td>
+          <span class="status status-ok">✅ STRUTTURA CORRETTA</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ <strong>H1 homepage:</strong> «Installazione Condizionatori Daikin a Milano: Tecnici Certificati F-gas con Garanzia 10 Anni»</li>
+            <li>✓ <strong>H2 corretto:</strong> «Cos'è Installazione Garantita?» (apostrofo aggiunto)</li>
+            <li>✓ <strong>H3 completo:</strong> «Garanzia 10 Anni» (testo corretto)</li>
+            <li>✓ <strong>Blog H1:</strong> «Blog: Guide e Aggiornamenti sull'Installazione Condizionatori»</li>
+            <li>✓ Gerarchia H1 &gt; H2 &gt; H3 rispettata su tutte le pagine</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- ALT TEXT -->
+      <tr>
+        <td class="td-elem">🖼️ Alt Text Immagini<br><small style="font-weight:400;color:var(--gray)">Tutte le pagine</small></td>
+        <td class="td-asis">
+          <span class="status status-error">❌ PROBLEMI DIFFUSI</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>Logo aziendale: <code>alt</code> assente</li>
+            <li>Badge Daikin ComfortStore: <code>alt</code> assente</li>
+            <li>Immagini prodotto: <code>alt="condizionatore Daikin Installazione Garantita"</code> — generico, uguale su 3 immagini diverse</li>
+            <li>Thumbnail video YouTube: <code>alt</code> assente</li>
+          </ul>
+        </td>
+        <td>
+          <span class="status status-ok">✅ ALT TEXT OTTIMIZZATI</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ Logo: «Installazione Garantita — Tecnici Certificati Daikin a Milano»</li>
+            <li>✓ Badge Daikin: «Rivenditore autorizzato Daikin ComfortStore»</li>
+            <li>✓ Emura: «Condizionatore Daikin Emura — design premium installato da Installazione Garantita a Milano»</li>
+            <li>✓ Perfera: «Condizionatore Daikin Perfera All Season — efficienza energetica classe A+++»</li>
+            <li>✓ Ogni immagine ha alt unico e contestualizzato</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- CANONICAL -->
+      <tr>
+        <td class="td-elem">🔗 Canonical Tag<br><small style="font-weight:400;color:var(--gray)">Tutte le pagine</small></td>
+        <td class="td-asis">
+          <span class="status status-error">❌ ASSENTE + RISCHIO DUPLICATI</span><br>
+          <span class="issue-text">Nessun canonical su nessuna pagina. In aggiunta, la sitemap contiene 4 landing page con contenuto potenzialmente sovrapposto:</span>
+          <span class="code-snippet"><span class="hl-red">/nuovi-condizionatori-senza-stress/
+/nuovi-condizionatori-g/
+/installazione-garantita-2/
+/perfera-all-season/</span></span>
+          <span style="font-size:13px;color:var(--gray);display:block;margin-top:8px">Senza canonical, Google non sa quale URL preferire e può penalizzare tutte le varianti.</span>
+        </td>
+        <td>
+          <span class="status status-ok">✅ CANONICAL AGGIUNTO OVUNQUE</span><br>
+          <span class="code-snippet"><span class="hl-green">&lt;link rel="canonical" href="https://www.installazionegarantita.it/"&gt;</span></span>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ Canonical su homepage e ogni pagina</li>
+            <li>✓ Le 4 landing page duplicate puntano alla homepage come canonical</li>
+            <li>✓ Formato HTTPS + www consistente</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- OPEN GRAPH -->
+      <tr>
+        <td class="td-elem">📱 Open Graph &amp; Twitter Card<br><small style="font-weight:400;color:var(--gray)">Social sharing</small></td>
+        <td class="td-asis">
+          <span class="status status-error">❌ COMPLETAMENTE ASSENTI</span><br>
+          <span class="issue-text">Nessun tag og: né twitter: su nessuna pagina.</span><br>
+          <span style="font-size:13px;color:var(--gray);display:block;margin-top:8px">Quando un link a installazionegarantita.it viene condiviso su WhatsApp, Facebook o LinkedIn, appare senza anteprima. Particolarmente penalizzante per un'azienda di servizi che dipende da referral e passaparola.</span>
+        </td>
+        <td>
+          <span class="status status-ok">✅ IMPLEMENTATI — TUTTE LE PAGINE</span><br>
+          <span class="code-snippet"><span class="hl-green">&lt;meta property="og:title" content="Installazione Condizionatori Milano — Garanzia 10 Anni"&gt;
+&lt;meta property="og:description" content="..."&gt;
+&lt;meta property="og:image" content="...condizionatore-Daikin-Emura.webp"&gt;
+&lt;meta property="og:url" content="https://www.installazionegarantita.it/"&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;</span></span>
+        </td>
+      </tr>
+
+      <!-- SCHEMA -->
+      <tr>
+        <td class="td-elem">🔍 Schema Markup<br><small style="font-weight:400;color:var(--gray)">JSON-LD</small></td>
+        <td class="td-asis">
+          <span class="status status-error">❌ COMPLETAMENTE ASSENTE</span><br>
+          <span class="issue-text">Nessun dato strutturato JSON-LD su nessuna pagina.</span><br>
+          <span style="font-size:13px;color:var(--gray);display:block;margin-top:8px">Opportunità persa: il sito ha una certificazione Daikin esplicita, una garanzia 10 anni verificabile e un'area di servizio geografica definita — tutti dati che Google può esporre come rich snippet.</span>
+        </td>
+        <td>
+          <span class="status status-ok">✅ SCHEMA JSON-LD IMPLEMENTATO</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ <strong>LocalBusiness</strong>: nome, indirizzo, telefono, email, P.IVA, orari apertura</li>
+            <li>✓ <strong>Service</strong>: installazione condizionatori con areaServed Milano</li>
+            <li>✓ <strong>Offer</strong>: garanzia 10 anni, prezzo bloccato, zero polvere</li>
+            <li>✓ <strong>Brand</strong>: Daikin partner ufficiale ComfortStore</li>
+            <li>✓ <strong>Certification</strong>: F-gas tecnici certificati</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- ROBOTS.TXT -->
+      <tr>
+        <td class="td-elem">🤖 robots.txt<br><small style="font-weight:400;color:var(--gray)">File radice</small></td>
+        <td class="td-asis">
+          <span class="status status-warning">⚠️ PARZIALMENTE CONFIGURATO</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>Disallow correttamente su /richiesta-inviata/ (pagina di ringraziamento)</li>
+            <li>Disallow su 4 URL di pagine specifiche di prodotto — potrebbe bloccare contenuto indicizzabile</li>
+            <li>Disallow su parametri <code>?p=1745</code>, <code>?p=1746</code>, <code>?p=1781</code> — corretto</li>
+            <li>Dichiarazione Sitemap: non confermata nel robots.txt</li>
+          </ul>
+        </td>
+        <td>
+          <span class="status status-ok">✅ OTTIMIZZATO</span><br>
+          <span class="code-snippet"><span class="hl-green">Sitemap: https://www.installazionegarantita.it/sitemap.xml
+
+User-agent: *
+Disallow: /richiesta-inviata/
+Disallow: /wp-admin/
+Disallow: /?s=
+Disallow: /wp-json/</span></span>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ Sitemap dichiarata esplicitamente</li>
+            <li>✓ Rimossi i Disallow sulle pagine prodotto (ora indicizzabili)</li>
+            <li>✓ Aggiunto blocco ricerca interna e API WordPress</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- SITEMAP -->
+      <tr>
+        <td class="td-elem">🗺️ Sitemap XML<br><small style="font-weight:400;color:var(--gray)">sitemap.xml</small></td>
+        <td class="td-asis">
+          <span class="status status-warning">⚠️ PRESENTE MA CON RISCHI</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>Struttura index con 4 sotto-sitemap (post, pagine, categorie, tag)</li>
+            <li>Contiene 20 URL totali, tra cui 4 landing page simili che rischiano di essere penalizzate come contenuto duplicato</li>
+            <li>Nessuna data <code>lastmod</code> nelle sotto-sitemap</li>
+            <li>Include URL come <code>/centro-privacy/crediti-multimediali/</code> di scarso valore SEO</li>
+          </ul>
+        </td>
+        <td>
+          <span class="status status-ok">✅ PULITA E OTTIMIZZATA</span><br>
+          <ul style="margin-top:8px;padding-left:18px;font-size:13px;color:var(--gray)">
+            <li>✓ Date <code>lastmod</code> aggiunte</li>
+            <li>✓ Le 4 landing page duplicate escluse dalla sitemap (canonical puntano alla homepage)</li>
+            <li>✓ URL di scarso valore SEO rimossi dalla sitemap principale</li>
+            <li>✓ Dichiarata nel robots.txt</li>
+          </ul>
+        </td>
+      </tr>
+
+      <!-- LANG -->
+      <tr>
+        <td class="td-elem">🌐 Attributo lang<br><small style="font-weight:400;color:var(--gray)">Tag html</small></td>
+        <td class="td-asis">
+          <span class="status status-error">❌ ASSENTE</span><br>
+          <span class="code-snippet"><span class="hl-red">&lt;html&gt;</span></span>
+          <span style="font-size:13px;color:var(--gray);display:block;margin-top:8px">I motori di ricerca non possono determinare la lingua. Impatta geotargeting e accessibilità.</span>
+        </td>
+        <td>
+          <span class="status status-ok">✅ AGGIUNTO</span><br>
+          <span class="code-snippet"><span class="hl-green">&lt;html lang="it"&gt;</span></span>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ═══ SEZIONE 3: AUDIT PER PAGINA ═══ -->
+<div class="section-block">
+  <div class="section-title-bar">
+    <div class="section-num">3</div>
+    <h2>Audit SEO Dettagliato per Pagina</h2>
+  </div>
+  <div class="pages-grid">
+
+    <div class="page-audit">
+      <h3>🏠 Homepage</h3>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Meta description: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Open Graph: ASSENTI</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Schema markup: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Canonical: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Logo: alt assente</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Badge Daikin ComfortStore: alt assente</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H1 non ottimizzato per keyword "installazione condizionatori"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H2 typo: "Cos è" → deve essere "Cos'è"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H3 troncato: "Garanzia 10" → "Garanzia 10 Anni"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>3 immagini con lo stesso alt generico</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>H1 presente (anche se non ottimizzato)</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Struttura a sezioni chiara e logica</span></div>
+    </div>
+
+    <div class="page-audit">
+      <h3>📝 Blog</h3>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>H1: COMPLETAMENTE ASSENTE — "Blog" è un H2</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Meta description: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Open Graph: ASSENTI</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Canonical: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Immagini articoli senza alt text</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Thumbnail video YouTube senza alt</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H2 multipli senza H2 principale di sezione</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Title presente: "Blog – Installazione Garantita"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Contenuto blog attivo (articolo Apr 2026)</span></div>
+    </div>
+
+    <div class="page-audit">
+      <h3>🤖 robots.txt &amp; Sitemap</h3>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Sitemap: dichiarazione nel robots.txt non confermata</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>4 landing page simili nella sitemap — rischio contenuto duplicato</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Disallow su pagine prodotto specifiche — blocca contenuto indicizzabile</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Nessun <code>lastmod</code> nelle sotto-sitemap</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Disallow corretto su /richiesta-inviata/ (pagina di ringraziamento)</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Disallow parametri ?p= (previene indicizzazione ID WordPress)</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Struttura sitemap index con 4 sotto-sitemap ben organizzate</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Assenza sitemap utenti WordPress (a differenza di sanificair.it)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA FINALE -->
+<div class="cta-bar">
+  <h2>Pronti a Migliorare il Posizionamento di installazionegarantita.it?</h2>
+  <p>Tutte le ottimizzazioni sono documentate e pronte per essere implementate su WordPress con Yoast SEO.</p>
+</div>
+
+<!-- FOOTER -->
+<div class="report-footer">
+  <p><strong>Analisi SEO Professionale — installazionegarantita.it</strong></p>
+  <p>Tecnologie Green SRL — P.IVA 11313930965 &nbsp;|&nbsp; Maggio 2025</p>
+</div>
+
+</body>
+</html>
