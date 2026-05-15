@@ -162,7 +162,7 @@
       <div class="score-big"><span class="score-num">89</span><span class="score-denom">/ 100</span></div>
       <div>
         <div class="score-label">🟢 Versione Ottimizzata (TO-BE)</div>
-        <div class="score-desc">Title e meta description ottimizzati per "installazione condizionatori Milano", canonical su ogni pagina, OG tags completi, schema LocalBusiness + Service con garanzia e certificazione Daikin, alt text descrittivi per tutte le immagini, heading corretti, robots.txt con sitemap dichiarata.</div>
+        <div class="score-desc">Title e meta description ottimizzati per "installazione condizionatori Milano", canonical su ogni pagina, OG tags completi, schema LocalBusiness + Service con garanzia e certificazione Daikin, alt text descrittivi per tutte le immagini, heading corretti, robots.txt con sitemap dichiarata e performance ottimizzata (WebP, lazy loading, script asincroni).</div>
         <span class="score-badge badge-green">OTTIMIZZAZIONE COMPLETATA</span>
       </div>
     </div>
@@ -243,10 +243,62 @@
   </div>
 </div>
 
-<!-- ═══ SEZIONE 2: TABELLA DI CONFRONTO ═══ -->
+<!-- ═══ SEZIONE 3: AUDIT PER PAGINA ═══ -->
 <div class="section-block">
   <div class="section-title-bar">
     <div class="section-num">2</div>
+    <h2>Audit SEO Dettagliato per Pagina</h2>
+  </div>
+  <div class="pages-grid">
+
+    <div class="page-audit">
+      <h3>🏠 Homepage</h3>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Meta description: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Open Graph: ASSENTI</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Schema markup: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Canonical: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Logo: alt assente</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Badge Daikin ComfortStore: alt assente</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H1 non ottimizzato per keyword "installazione condizionatori"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H2 typo: "Cos è" → deve essere "Cos'è"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H3 troncato: "Garanzia 10" → "Garanzia 10 Anni"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>3 immagini con lo stesso alt generico</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>H1 presente (anche se non ottimizzato)</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Struttura a sezioni chiara e logica</span></div>
+    </div>
+
+    <div class="page-audit">
+      <h3>📝 Blog</h3>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>H1: COMPLETAMENTE ASSENTE — "Blog" è un H2</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Meta description: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Open Graph: ASSENTI</span></div>
+      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Canonical: ASSENTE</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Immagini articoli senza alt text</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Thumbnail video YouTube senza alt</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H2 multipli senza H2 principale di sezione</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Title presente: "Blog – Installazione Garantita"</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Contenuto blog attivo (articolo Apr 2026)</span></div>
+    </div>
+
+    <div class="page-audit">
+      <h3>🤖 robots.txt &amp; Sitemap</h3>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Sitemap: dichiarazione nel robots.txt non confermata</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>4 landing page simili nella sitemap — rischio contenuto duplicato</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Disallow su pagine prodotto specifiche — blocca contenuto indicizzabile</span></div>
+      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Nessun <code>lastmod</code> nelle sotto-sitemap</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Disallow corretto su /richiesta-inviata/ (pagina di ringraziamento)</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Disallow parametri ?p= (previene indicizzazione ID WordPress)</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Struttura sitemap index con 4 sotto-sitemap ben organizzate</span></div>
+      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Assenza sitemap utenti WordPress (a differenza di sanificair.it)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ SEZIONE 2: TABELLA DI CONFRONTO ═══ -->
+<div class="section-block">
+  <div class="section-title-bar">
+    <div class="section-num">3</div>
     <h2>Tabella di Confronto: Elementi SEO On-Page</h2>
   </div>
   <div class="comparison-table-wrapper">
@@ -512,58 +564,6 @@ Disallow: /wp-json/</span></span>
 
     </tbody>
   </table>
-  </div>
-</div>
-
-<!-- ═══ SEZIONE 3: AUDIT PER PAGINA ═══ -->
-<div class="section-block">
-  <div class="section-title-bar">
-    <div class="section-num">3</div>
-    <h2>Audit SEO Dettagliato per Pagina</h2>
-  </div>
-  <div class="pages-grid">
-
-    <div class="page-audit">
-      <h3>🏠 Homepage</h3>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Meta description: ASSENTE</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Open Graph: ASSENTI</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Schema markup: ASSENTE</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Canonical: ASSENTE</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Logo: alt assente</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Badge Daikin ComfortStore: alt assente</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H1 non ottimizzato per keyword "installazione condizionatori"</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H2 typo: "Cos è" → deve essere "Cos'è"</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H3 troncato: "Garanzia 10" → "Garanzia 10 Anni"</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>3 immagini con lo stesso alt generico</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>H1 presente (anche se non ottimizzato)</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Struttura a sezioni chiara e logica</span></div>
-    </div>
-
-    <div class="page-audit">
-      <h3>📝 Blog</h3>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>H1: COMPLETAMENTE ASSENTE — "Blog" è un H2</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Meta description: ASSENTE</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Open Graph: ASSENTI</span></div>
-      <div class="audit-item"><div class="audit-dot dot-red"></div><span>Canonical: ASSENTE</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Immagini articoli senza alt text</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Thumbnail video YouTube senza alt</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>H2 multipli senza H2 principale di sezione</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Title presente: "Blog – Installazione Garantita"</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Contenuto blog attivo (articolo Apr 2026)</span></div>
-    </div>
-
-    <div class="page-audit">
-      <h3>🤖 robots.txt &amp; Sitemap</h3>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Sitemap: dichiarazione nel robots.txt non confermata</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>4 landing page simili nella sitemap — rischio contenuto duplicato</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Disallow su pagine prodotto specifiche — blocca contenuto indicizzabile</span></div>
-      <div class="audit-item"><div class="audit-dot dot-orange"></div><span>Nessun <code>lastmod</code> nelle sotto-sitemap</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Disallow corretto su /richiesta-inviata/ (pagina di ringraziamento)</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Disallow parametri ?p= (previene indicizzazione ID WordPress)</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Struttura sitemap index con 4 sotto-sitemap ben organizzate</span></div>
-      <div class="audit-item"><div class="audit-dot dot-green"></div><span>Assenza sitemap utenti WordPress (a differenza di sanificair.it)</span></div>
-    </div>
-
   </div>
 </div>
 
