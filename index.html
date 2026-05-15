@@ -45,7 +45,7 @@
     .badge-green { background: var(--green); color: white; }
 
     /* ISSUES */
-    .issues-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 30px; }
+    .issues-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 30px; }
     .issue-card { border-radius: 10px; padding: 16px; text-align: center; border: 2px solid; }
     .issue-card.critical { background: #fef2f2; border-color: #fca5a5; }
     .issue-card.high { background: #fff7ed; border-color: #fdba74; }
@@ -194,6 +194,11 @@
       <div class="num">1</div>
       <div class="lbl">H1 Blog</div>
       <div class="desc">Pagina Blog senza H1 — il primo heading visibile è un H2</div>
+    </div>
+    <div class="issue-card high">
+      <div class="num">6s</div>
+      <div class="lbl">Performance</div>
+      <div class="desc">LCP ~6 secondi — sotto soglia Core Web Vitals Google (target ≤ 2,5s). Fattore di ranking diretto</div>
     </div>
   </div>
 </div>
