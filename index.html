@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Analisi SEO installazionegarantita.it — AS-IS vs TO-BE</title>
+  <!-- Performance: priorità al rendering della pagina -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#1a5276">
   <style>
     :root {
       --red: #dc2626; --red-bg: #fef2f2; --red-border: #fca5a5;
@@ -55,7 +58,7 @@
     .issue-card .desc { font-size: 12px; color: var(--gray); margin-top: 6px; line-height: 1.4; }
 
     /* SECTIONS */
-    .section-block { max-width: 1100px; margin: 0 auto 50px; padding: 0 30px; }
+    .section-block { max-width: 1100px; margin: 0 auto 50px; padding: 0 30px; content-visibility: auto; contain-intrinsic-size: auto 600px; }
     .section-title-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
     .section-title-bar h2 { font-size: 22px; font-weight: 800; color: var(--blue); }
     .section-num { background: var(--blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
